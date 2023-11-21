@@ -75,7 +75,6 @@ namespace HutongGames.PlayMaker.Actions
             enemyInRange.Values = gameObjects.ToArray();
             NearestTarget.Value = tempGO;
 
-            // 找出结果后，跳到下一个node
             Finish();
         }
     }
