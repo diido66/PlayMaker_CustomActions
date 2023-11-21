@@ -5,7 +5,7 @@ using System.Collections.Generic;
 namespace HutongGames.PlayMaker.Actions
 {
     [ActionCategory(ActionCategory.Physics2D)]
-    public class 寻找最近的敌人 : FsmStateAction
+    public class FindNearest_Target : FsmStateAction
     {
         [RequiredField] public FsmOwnerDefault ownerDefault;
 
@@ -19,7 +19,7 @@ namespace HutongGames.PlayMaker.Actions
         public FsmInt[] layerMask;
 
         [Tooltip("Invert the mask, so you pick from all layers except those defined above.")]
-        public FsmBool 反转Mask;
+        public FsmBool InvertMask;
 
         [RequiredField] [ArrayEditor(VariableType.GameObject)]
         public FsmGameObject NearestTarget;
@@ -29,6 +29,7 @@ namespace HutongGames.PlayMaker.Actions
         private GameObject gameObject;
         private GameObject tempGO;
 
+        /// Update Later: will check has component
         // [RequiredField] [UIHint(UIHint.ScriptComponent)] [Tooltip("The name of the component to check for.")]
         // public FsmString component;
         // private Component aComponent;
@@ -42,7 +43,7 @@ namespace HutongGames.PlayMaker.Actions
         public override void OnUpdate()
         {
             cols = Physics2D.OverlapCircleAll(gameObject.transform.position, radius.Value,
-                ActionHelpers.LayerArrayToLayerMask(layerMask, 反转Mask.Value));
+                ActionHelpers.LayerArrayToLayerMask(layerMask, InvertMask.Value));
             if (cols.Length < 1)
             {
                 NearestTarget.Value = null;
